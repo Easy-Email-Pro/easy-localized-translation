@@ -1,5 +1,2 @@
-export interface Config {
-    path: string;
-    keyword?: string;
-}
-export declare function extract(config: Config): string[];
+export { extract } from './extract';
+export { translate } from './translate';
