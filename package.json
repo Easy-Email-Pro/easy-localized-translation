@@ -13,7 +13,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "demo": "ts-node src/demo.ts"
+    "demo": "ts-node --transpile-only src/demo.ts"
   },
   "author": "m-Ryan",
   "devDependencies": {

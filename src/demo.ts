@@ -7,7 +7,13 @@ import * as dotenv from 'dotenv';
 const config = dotenv.config();
 
 async function main() {
-  const words = extract({ path: 'example' });
+  const words = extract({
+    path: 'example',
+    excludes: ['\\*.json'],
+    excludeDir: ['node_modules'],
+    includes: ['\\*.tsx'],
+  });
+  console.log(words);
 
   const translateWords = await translate(words, {
     from: 'en',

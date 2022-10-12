@@ -7,6 +7,9 @@ import { ShellString } from 'shelljs';
 export interface Config {
   path: string;
   keyword?: string;
+  includes?: string[];
+  excludes?: string[];
+  excludeDir?: string[];
 }
 
 export function extract(config: Config) {
@@ -16,9 +19,14 @@ export function extract(config: Config) {
   const tempFile = path.join(process.cwd(), `./_translate${+new Date()}.txt`);
   // shell.exec(`chcp 65001`, { silent: true });
 
+  const includesStr = config.includes?.map(item => `--include=${item}`).join(' ') || '';
+  const excludesStr = config.excludes?.map(item => `--exclude=${item}`).join(' ') || '';
+  const excludeDirStr =
+    config.excludeDir?.map(item => `--exclude-dir=${item}`).join(' ') || '';
+
   const result = shell
     .exec(
-      `${grep} -Phrzoe "(?<=[^a-zA-Z]${keyword}\\()[\\n\\s\\t]*([\\"\\\`\\'])([\\d\\D]*?)\\1(?=([\\n\\s\\t]*)[\\),])" ${config.path}`,
+      `${grep} -Phrzoe "(?<=[^a-zA-Z]${keyword}\\()[\\n\\s\\t]*([\\"\\\`\\'])([\\d\\D]*?)\\1(?=([\\n\\s\\t]*)[\\),])" ${includesStr} ${excludesStr} ${excludeDirStr} ${config.path}`,
       { silent: true },
     )
     .exec(`${grep} -Pzoe "(?<=([\\"\\\`\\']))[\\d\\D]*(?=\\1)" `, {
