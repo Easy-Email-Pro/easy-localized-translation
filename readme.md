@@ -54,6 +54,15 @@ const words = extract({
   path: 'example', // your folder/file
 });
 
+// complex scene
+// const words = extract({
+//   keyword: 't',
+//   path: 'example',
+//   excludes: ['\\*.json'],
+//   excludeDir: ['node_modules'],
+//   includes: ['\\*.tsx'],
+// });
+
 console.log(words);
 
 //output
